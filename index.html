@@ -1,62 +1,440 @@
-import java.util.Random;
+<!DOCTYPE html>
+<!-- Morgane Bentzinger - 261062953 -->
+<!-- I used Chrome -->
+<html>
 
-public class Coin {
-
-    public static void main(String[] args) {
-        Coin coin = new Coin();
-        System.out.println("Initial side up: " + coin.getSideUp());
-
-        for(int toss = 1; toss <= 20; toss++) {
-            coin.toss();
-            System.out.println("Side up after toss " + toss + ": " + coin.getSideUp());
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CCCS310 Assignment 2 - Morgane Bentzinger's blog</title>
+    <style>
+        * {
+            box-sizing: border-box;
         }
 
-        System.out.println("Final heads count: " + coin.getHeadsCount());
-        System.out.println("Final tails count: " + coin.getTailsCount());
-    }
-
-    private String sideUp;
-    private int headsCount;
-    private int tailsCount;
-
-    public Coin() {
-        toss();
-    }
-
-    private void toss() {
-        Random r = new Random();
-        int random = r.nextInt(2);
-
-        if(random == 0) {
-             this.setSideUp("heads");
-             this.incHeadsCount();
-        } else {
-            this.setSideUp("tails");
-            this.incTailsCount();
+        body {
+            margin: 0 auto;
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-    }
 
-    public String getSideUp() {
-        return this.sideUp;
-    }
+        .flex-container {
+            display: flex;
+        }
 
-    public void setSideUp(String side) {
-        this.sideUp = side;
-    }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        nav ul {
+            margin: 0;
+            font-weight: normal;
+        }
 
-    public int getHeadsCount() {
-        return this.headsCount;
-    }
+        nav li {
+            list-style-type: none;
+        }
 
-    public int getTailsCount() {
-        return this.tailsCount;
-    }
+        .padding-4 {
+            padding-right: 4rem;
+            padding-left: 4rem;
+        }
 
-    public void incHeadsCount() {
-        this.headsCount++;
-    }
+        /******** HEADER ********/
+        header p {
+            margin: 0;
+        }
 
-    public void incTailsCount() {
-        this.tailsCount++;
-    }
-}
+        header ul,
+        aside ul,
+        footer ul {
+            padding: 0;
+        }
+
+        header nav {
+            padding: .75rem 0;
+        }
+
+        .secondary-nav .flex-container {
+            align-items: center;
+        }
+
+        .secondary-nav p,
+        .title {
+            color: white;
+        }
+
+        .secondary-nav {
+            background-color: #115351;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .secondary-nav li {
+            margin-left: 1rem;
+        }
+
+        .secondary-nav a {
+            color: #81b48a;
+            font-weight: 600;
+        }
+
+        .secondary-nav a:hover {
+            color: #f46e07;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            background-color: #00855f;
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
+            align-items: baseline;
+        }
+
+        .subtitle {
+            margin-left: 3rem;
+            font-size: 1.50em;
+        }
+
+        .main-nav {
+            background-color: #81b48a;
+            font-size: 1.5em;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            margin-right: 1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: black;
+        }
+
+        .main-nav a:hover {
+            color: white;
+        }
+
+        /******** MAIN ********/
+        main {
+            align-items: flex-start;
+        }
+
+        .articles {
+            padding-right: 4em;
+        }
+
+        .articles,
+        aside {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 1.40em;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        article:not(:first-child) h2 {
+            /* change margin for all h2's except for the first */
+            margin-top: 2em;
+        }
+
+        .metadata a,
+        .read-more {
+            color: #81b48a;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .metadata a:hover,
+        .read-more:hover {
+            color: #f46e07;
+            text-decoration: underline;
+        }
+
+        .indented {
+            margin-left: 2rem;
+            padding: .5rem;
+            border-left: 3px solid #81b48a;
+        }
+
+        /******** SIDEBAR ********/
+        aside {
+            background-color: #d7ddd2;
+            padding: 2rem;
+            min-width: 35%;
+        }
+
+        .aside-nav:not(:last-of-type) {
+            margin-bottom: 1.5rem;
+        }
+        
+        .aside-nav h3 {
+            margin-bottom: .25rem;
+        }
+
+        .aside-nav ul {
+            padding-left: 1rem;
+        }
+
+        .aside-nav a {
+            color: black;
+            text-decoration: none;
+            font-size: .9em;
+        }
+
+        .aside-nav a:hover {
+            color: #00855f;
+            text-decoration: underline;
+        }
+
+        /******** FOOTER ********/
+        footer {
+            background-color: #115351;
+            padding: 1rem;
+            justify-content: space-between;
+        }
+
+        footer h3 {
+            color: #81b48a;
+            margin: 1rem 0;
+        }
+
+        footer nav {
+            margin-right: 1.5rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #f46e07;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            margin-top: -1em;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="secondary-nav flex-container padding-4">
+            <div class="flex-container">
+                <p>Welcome Guest!</p>
+                <ul class="flex-container">
+                    <li><a href="https://www.justinguitar.com/users/sign_in">Login</a></li>
+                    <li><a href="https://www.justinguitar.com/users/sign_up">Signup</a></li>
+                </ul>
+            </div>
+            <div class="flex-container">
+                <p>Stay Updated</p>
+                <ul class="flex-container">
+                    <li><a href="https://www.tofugu.com/feed.xml">Subscribe via RSS</a></li>
+                    <li><a href="https://www.tofugu.com/newsletter/">Email Updates</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="title flex-container padding-4">
+            <h1>My Blog</h1>
+            <p class="subtitle">Description of My Blog</p>
+        </div>
+
+        <nav class="main-nav padding-4">
+            <ul class="flex-container">
+                <li><a href="http://hyperboleandahalf.blogspot.com/">Home</a></li>
+                <li><a href="http://hyperboleandahalf.blogspot.com/p/about.html">About</a></li>
+                <li><a href="http://hyperboleandahalf.blogspot.com/2010/10/god-of-cake.html">Blog</a></li>
+                <li><a href="https://www.tofugu.com/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-container padding-4">
+        <div class="articles">
+            <article>
+                <h2>Don't Cancel Chuck!</h2>
+                <p class="metadata">Of July in <a href="https://www.tofugu.com/japan/">General</a> Updated <a href="https://www.tofugu.com/about/people/kanae-nakamine/">piettons</a> by <a
+                        href="https://www.tofugu.com/about/people/koichi/">admin</a></p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut augue pulvinar, finibus massa ac,
+                    condimentum turpis.
+                    Nullam venenatis ipsum sed leo tincidunt molestie. Integer lobortis diam interdum justo euismod
+                    facilisis nec quis ex.
+                    Suspendisse tellus augue, faucibus eu posuere sit amet, tincidunt eu neque. Ut a arcu non risus
+                    vehicula gravida.
+                    Ut sodales quam id hendrerit aliquam. Sed magna tellus, maximus et augue ut, aliquam aliquet enim.
+                </p>
+
+                <p class="indented">Donec lacus felis, ornare non ligula eu, consequat euismod neque. Phasellus
+                    tincidunt gravida enim ac semper. Aenean quis lorem eget dui
+                    hendrerit tempor aliquet sit amet leo. Nunc sed sagittis arcu, id sagittis neque. Aenean aliquet
+                    laoreet augue, ac ornare ipsum vestibulum ac.
+                    Vestibulum fermentum faucibus nulla. Ut auctor diam ut consequat faucibus. Curabitur vitae augue
+                    euismod, hendrerit purus tristique, sollicitudin
+                    tortor. Cras at lectus at sem viverra consectetur. Phasellus a rhoncus ipsum.</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut augue pulvinar, finibus massa ac,
+                    condimentum turpis.
+                    Nullam venenatis ipsum sed leo tincidunt molestie. Integer lobortis diam interdum justo euismod
+                    facilisis nec quis ex.
+                    Suspendisse tellus augue, faucibus eu posuere sit amet, tincidunt eu neque. Ut a arcu non risus
+                    vehicula gravida.
+                    Ut sodales quam id hendrerit aliquam. Sed magna tellus, maximus et augue ut, aliquam aliquet enim.
+                    <a href="https://jamesclear.com/read-more" class="read-more">Read more</a>
+                </p>
+            </article>
+
+            <article>
+                <h2>Alien Spacecraft found in New Mexico</h2>
+                <p class="metadata">Of July in <a href="https://www.tofugu.com/japan/">General</a> Updated <a href="https://www.tofugu.com/about/people/kanae-nakamine/">piettons</a> by <a
+                        href="https://www.tofugu.com/about/people/koichi/">admin</a></p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut augue pulvinar, finibus massa ac,
+                    condimentum turpis.
+                    Nullam venenatis ipsum sed leo tincidunt molestie. Integer lobortis diam interdum justo euismod
+                    facilisis nec quis ex.
+                    Suspendisse tellus augue, faucibus eu posuere sit amet, tincidunt eu neque. Ut a arcu non risus
+                    vehicula gravida.
+                    Ut sodales quam id hendrerit aliquam. Sed magna tellus, maximus et augue ut, aliquam aliquet enim.
+                </p>
+
+                <ul>
+                    <li>Lorem - ipsum dolor sit amet</li>
+                    <li>Consectetur - adipiscing elit</li>
+                    <li>Ut - et felis feugiat, aliquet dui eget</li>
+                </ul>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut augue pulvinar, finibus massa ac,
+                    condimentum turpis.
+                    Nullam venenatis ipsum sed leo tincidunt molestie. Integer lobortis diam interdum justo euismod
+                    facilisis nec quis ex.
+                    Suspendisse tellus augue, faucibus eu posuere sit amet, tincidunt eu neque. Ut a arcu non risus
+                    vehicula gravida.
+                    Ut sodales quam id hendrerit aliquam. Sed magna tellus, maximus et augue ut, aliquam aliquet enim.
+                    <a href="https://jamesclear.com/read-more" class="read-more">Read more</a>
+                </p>
+            </article>
+
+            <article>
+                <h2>Ghostly Goo in your Kitchen Sink?</h2>
+                <p class="metadata">Of July in <a href="https://www.tofugu.com/japan/">General</a> Updated <a href="https://www.tofugu.com/about/people/kanae-nakamine/">piettons</a> by <a
+                        href="https://www.tofugu.com/about/people/koichi/">admin</a></p>
+
+                <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</strong> Donec ut augue pulvinar,
+                    finibus massa ac, condimentum turpis.
+                    Nullam venenatis ipsum sed leo tincidunt molestie. Integer lobortis diam interdum justo euismod
+                    facilisis nec quis ex.
+                    Suspendisse tellus augue, faucibus eu posuere sit amet, tincidunt eu neque. Ut a arcu non risus
+                    vehicula gravida.
+                    Ut sodales quam id hendrerit aliquam. Sed magna tellus, maximus et augue ut, aliquam aliquet enim.
+                </p>
+
+                <!-- wouldn't make sense to have an h4 before an h3 semantically -->
+                <h3>Header level 3</h3>
+                <ol>
+                    <li>Lorem - ipsum dolor sit amet</li>
+                    <li>Consectetur - adipiscing elit</li>
+                </ol>
+
+                <p class="indented">Donec lacus felis, ornare non ligula eu, consequat euismod neque. Phasellus
+                    tincidunt gravida enim ac semper. Aenean quis lorem eget dui
+                    hendrerit tempor aliquet sit amet leo. Nunc sed sagittis arcu, id sagittis neque. Aenean aliquet
+                    laoreet augue, ac ornare ipsum vestibulum ac.
+                    Vestibulum fermentum faucibus nulla. Ut auctor diam ut consequat faucibus. Curabitur vitae augue
+                    euismod, hendrerit purus tristique, sollicitudin
+                    tortor. Cras at lectus at sem viverra consectetur. Phasellus a rhoncus ipsum.</p>
+
+                <h3>Header level 3</h3>
+
+                <ul>
+                    <li>Consectetur - adipiscing elit</li>
+                    <li>Ut - et felis feugiat, aliquet dui eget</li>
+                </ul>
+
+                <ol>
+                    <li>Lorem - ipsum dolor sit amet</li>
+                    <li>Consectetur - adipiscing elit</li>
+                </ol>
+            </article>
+        </div> <!-- /articles -->
+
+
+        <aside>
+            <nav class="aside-nav">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="https://blog.lafermedesanimaux.com/chiens">Lorem - ipsum dolor sit amet</a></li>
+                    <li><a href="https://blog.lafermedesanimaux.com/chats">Consectetur - adipiscing elit</a></li>
+                    <li><a href="https://blog.lafermedesanimaux.com/rongeurs">Ut - et felis feugiat, aliquet dui eget</a></li>
+                    <li><a href="https://blog.lafermedesanimaux.com/furets">Consectetur - adipiscing elit</a></li>
+                    <li><a href="https://blog.lafermedesanimaux.com/poissons">Ut - et felis feugiat, aliquet dui eget</a></li>
+                </ul>
+            </nav>
+
+            <nav class="aside-nav">
+                <h3>Recent Posts</h3>
+                <ul>
+                    <li><a href="https://www.tofugu.com/reviews/marugoto/">Consectetur - adipiscing elit</a></li>
+                    <li><a href="https://www.tofugu.com/japanese/kosoado/">Ut - et felis feugiat, aliquet dui eget</a></li>
+                    <li><a href="https://www.tofugu.com/reviews/todai-easy-japanese-news-app/">Consectetur - adipiscing elit</a></li>
+                    <li><a href="https://www.tofugu.com/reviews/quartet-vol1/">Ut - et felis feugiat, aliquet dui eget</a></li>
+                </ul>
+            </nav>
+
+            <nav class="aside-nav">
+                <h3>Archives</h3>
+                <ul>
+                    <li><a href="http://hyperboleandahalf.blogspot.com/2010/06/">June 2008</a></li>
+                    <li><a href="http://hyperboleandahalf.blogspot.com/2010/05/">May 2008</a></li>
+                    <li><a href="http://hyperboleandahalf.blogspot.com/2010/04/">April 2008</a></li>
+                    <li><a href="http://hyperboleandahalf.blogspot.com/2010/03/">March 2008</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+    </main>
+
+    <footer class="flex-container">
+        <section class="flex-container">
+            <nav class="footer-nav">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="http://pbfcomics.com/">Lorem - ipsum dolor sit amet</a></li>
+                    <li><a href="http://harkavagrant.com/">Consectetur - adipiscing elit</a></li>
+                    <li><a href="http://whiteboardunicorns.com/">Ut - et felis feugiat, aliquet dui eget</a></li>
+                    <li><a href="http://strangerthaneviction.tumblr.com/">Consectetur - adipiscing elit</a></li>
+                </ul>
+            </nav>
+
+            <nav class="footer-nav">
+                <h3>Follow our updates</h3>
+                <ul>
+                    <li><a href="https://www.tofugu.com/podcast">Lorem - ipsum dolor sit amet</a></li>
+                    <li><a href="https://www.tofugu.com/feed.xml">Consectetur - adipiscing elit</a></li>
+                    <li><a href="https://twitter.com/tofugu/">Ut - et felis feugiat, aliquet dui eget</a></li>
+                    <li><a href="https://www.youtube.com/user/tofugu/">Consectetur - adipiscing elit</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <section class="copyright">
+            <h3>&#169; Copyright 2006<br>All rights reserved</h3>
+        </section>
+    </footer>
+</body>
+
+</html>
